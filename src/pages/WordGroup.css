@@ -1,0 +1,87 @@
+.main_group{
+  width: 90vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.header_group{
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.body_group{
+  width: 100%;
+  height: 78%;
+  border: 1px solid gray;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 1%;
+}
+.footer_group{
+  width: 100%;
+  height: 15%;
+}
+.btn1,.btn2,.btn3{
+  width: 140px;
+  height: 38px;
+  border-radius: 4px;
+  background-color: rgb(23, 23, 29);
+  color: white;
+  font-size: 12px;
+}
+.btn2{
+  background-color: rgb(65, 28, 15) !important;
+}
+.btn3{
+  width: 220px;
+  background-color: rgb(26, 42, 26) !important;
+}
+
+.addGroup{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.addGroup input,select{
+  width: 220px;
+  height: 38px;
+  margin-bottom: 1%;
+  border-radius: 4px;
+  border: 1px solid gray;
+}
+.addGroup select{
+  width: 225px;
+  margin-bottom: 5%;
+}
+
+.doc-words,.scrollable-words-list1{
+  width: 80vw;
+  height: 30vh;
+  border: 1px solid lightblue;
+  border-radius: 3px;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+}
+
+.button-wrapper{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}

@@ -1,0 +1,36 @@
+.word-context-viewer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  width: 80%;
+}
+
+.context-display {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin: 10px 0;
+  width: 90%;
+  max-width: 600px;
+  min-height: 100px;
+  overflow-y: auto;
+}
+
+button {
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-next{
+  background-color: #007bff;
+  color: white;
+}
+
+button:disabled {
+  background-color: #cccccc;
+}

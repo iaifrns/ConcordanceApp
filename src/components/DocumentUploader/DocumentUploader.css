@@ -1,0 +1,44 @@
+/* src/components/DocumentUploader.css */
+
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.dropzone {
+  border: 2px dashed #007bff;
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.dropzone:hover {
+  background-color: #f8f9fa;
+}
+
+.dropzone p {
+  margin: 0;
+  font-size: 16px;
+}
+
+button {
+  cursor: pointer;
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* Additional styling for the upload button */
+.upload-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  display: none; /* Initially hidden */
+}
+
+.upload-button.show {
+  display: block; /* Show when a file is selected */
+}
