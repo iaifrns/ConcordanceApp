@@ -10,11 +10,20 @@
     width: 100%;
     height: 14%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     border: 1px solid lightgray;
     background: rgb(28, 28, 29);
     color: white;
+}
+.header-wrapper{
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 .stat_body{
     width: 100%;
@@ -30,7 +39,154 @@
 }
 
 .chart{
+    width: 96vw;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.card-wrapper{
+    width: 48vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid rgb(12, 12, 12);
+    border-radius: 4px;
+}
+.chart-bar{
+    width: 49vw;
+    height: 100%;
+    border-radius: 4px;
+    border: 2px solid rgb(12, 12, 12);
+    border-radius: 4px;
+}
+.freq-words{
+    width: 96%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: rgb(222, 220, 220);
+    border: 4px 4px 4px 4px rgb(38, 37, 37);
+}
+.freq-words-item{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.selects-wrapper{
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+.div-select{
+    width: 45%;
+    height: 70%;
+    margin-bottom: 2%;
+}
+.div-select select{
+    width: 100%;
+    height: 70%;
+    border-radius: 3px;
+}
+.space{
+    margin-bottom: 1%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: auto;
+    height: 30px !important;
+    border-radius: 4px !important;
+    padding: 1% !important;
+    margin-left: 1%;
+}
+.count-round{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: white;
+    color: rgb(4, 12, 18);
+    margin-left: 10%;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+}
+.cards-wrapper-items{
+    width: 97%;
+    height: 35%;
+    margin-top: 2%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.sample-card {
+    width: 45%;
+    height: 98%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px; /* 5px rounded corners */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: black;
+    color: white;
+  }
+  .chart1,.stat_header1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .stat_header1{
+    flex-direction: row !important;
+  }
+  .data-mining{
+    width: 90vw;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 3px;
+    flex-direction: column;
+    overflow: scroll;
+  }
+  .tbl-headinds{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: center;
+    background-color: black;
+    color: white;
+    padding-top: 2%;
+    padding-bottom: 2%;
+  }
+  .tbl-columns-wrapper{
     width: 100%;
     height: auto;
-    border: 1px solid red;
-}
+    padding: 1%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .tbl-columns{
+    width: auto;
+    padding: 1%;
+    flex-direction: column;
+    height: fit-content;
+    text-align: center;
+  }
+

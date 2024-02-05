@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import './WordGroup.css'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Stack, Typography, styled } from '@mui/material';
+import { Box, Button, Chip, FormControl, InputLabel, MenuItem, Modal, OutlinedInput, Select, SelectChangeEvent, Stack, Theme, Typography, styled, useTheme } from '@mui/material';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 
@@ -39,9 +39,6 @@ export default function WordExpression({ documents }: any) {
 
     const [page1, setPage1] = useState<number>(1);
     const [hasMore1, setHasMore1] = useState<boolean>(true);
-
-    const [page2, setPage2] = useState<number>(1);
-    const [hasMore2, setHasMore2] = useState<boolean>(true);
 
     const [isGroup, setIsGroup] = useState<boolean>(true);
 
@@ -143,6 +140,26 @@ export default function WordExpression({ documents }: any) {
         cursor: 'pointer'
     }));
 
+    const [open1, setOpen1] = useState(false);
+    const theme = useTheme();
+    const handleChange = (event: SelectChangeEvent<typeof selectedText>) => {
+        const {
+            target: { value },
+        } = event;
+        setSelectedText(
+            // On autofill we get a stringified value.
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };
+
+    function getStyles(name: string, personName: readonly string[], theme: Theme) {
+        return {
+            fontWeight:
+                personName.indexOf(name) === -1
+                    ? theme.typography.fontWeightRegular
+                    : theme.typography.fontWeightMedium,
+        };
+    }
 
 
     return (
@@ -154,7 +171,7 @@ export default function WordExpression({ documents }: any) {
             <Box border={1} borderRadius={3} p={3} gap={2} maxHeight={'70vh'} width={'80%'} display={'flex'} justifyContent={'center'} alignItems={'center'} >
                 {/* display word groups */}
                 {
-                    toggle.map((item: ToggleInterface, index: number) => {
+                    toggle.map((item: ToggleInterface) => {
                         return (
                             <>
                                 {item.action === 'GroupList' && item.active && <Box width={'100%'}  >
@@ -196,77 +213,111 @@ export default function WordExpression({ documents }: any) {
                                     </Stack>
                                 </Box>
                                 }
-
-                                {item.action === 'AddGroup' && item.active && <Box width={'100%'} gap={2} display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'}>
-                                    <Typography variant='h4'>Words In Expression: {selectedText.join(" ")}</Typography>
-                                    <Stack direction={'column'} justifyContent={'center'} alignItems={'center'}>
-                                        <select onChange={(e) => {
-                                            const str = e.target.value.replace(".txt", "")
-                                            const obj = documents.find((item: any, index: number) => item?.name === str);
-                                            setSelectedDoc(obj)
-                                        }}
-                                            style={{
-                                                width: 350,
-                                                height: 55
-                                            }}
-                                        >
-                                            {
-                                                documents?.map((doc: any, index: number) => {
-                                                    return (
-                                                        <option>{doc?.name + ".txt"}</option>
-                                                    )
-                                                })
-                                            }
-                                        </select>
-                                        <input type='text'
-                                            onChange={(e) => setExpressionInput(e.target.value)}
-                                            placeholder='Enter expression name ...'
-                                            style={{
-                                                width: 350,
-                                                height: 50
-                                            }}
-                                        />
-                                    </Stack>
-
-                                    <Box width={'100%'} height={'35vh'} border={'1px solid gray'} overflow={'scroll'} borderRadius={3}>
-                                        {documentText.map((word: any) => (
-                                            <button key={word}
-                                                onClick={() => setSelectedText((prev) => [...prev, word])}
-                                                type="button" className="word-item">
-                                                {word}
-                                            </button>
-                                        ))}
-
-                                    </Box>
-
-                                    <Stack direction={'row'} gap={3} justifyContent={'space-around'} width={'80%'}>
-                                        <Button
-                                            variant={'contained'}
-                                            onClick={() => saveNewExpression()} >Save Expression</Button>
-                                        <Button
-                                            variant={'contained'}
-                                            onClick={() => setSelectedText([])} >Clear Words</Button>
-                                    </Stack>
-
-                                </Box>
-                                }
                             </>
                         )
                     })
                 }
             </Box>
+
+            <Modal
+                open={open1}
+                onClose={() => {
+                    setOpen1(false)
+                    updateToggle('GroupList')
+                }}
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+            >
+
+                <Box
+                    bgcolor={'white'}
+                    width={500}
+                    display={'flex'}
+                    flexDirection={'column'}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                    p={3}
+                    gap={3}
+                >
+
+                    <Typography variant='h4'>Add Word</Typography>
+                    <Stack direction={'column'} justifyContent={'center'} alignItems={'center'} gap={1}>
+                        <select onChange={(e) => {
+                            const str = e.target.value.replace(".txt", "")
+                            const obj = documents.find((item: any, index: number) => item?.name === str);
+                            setSelectedDoc(obj)
+                        }}
+                            style={{
+                                width: '100%',
+                                height: 55
+                            }}
+                        >
+                            {
+                                documents?.map((doc: any, index: number) => {
+                                    return (
+                                        <option>{doc?.name + ".txt"}</option>
+                                    )
+                                })
+                            }
+                        </select>
+                        <input type='text'
+                            onChange={(e) => setExpressionInput(e.target.value)}
+                            placeholder='Enter expression name ...'
+                            style={{
+                                width: 350,
+                                height: 50
+                            }}
+                        />
+                        <FormControl fullWidth>
+                            <InputLabel id="demo-multiple-chip-label">Select words</InputLabel>
+                            <Select
+                                labelId="demo-multiple-chip-label"
+                                id="demo-multiple-chip"
+                                multiple
+                                value={selectedText}
+                                onChange={handleChange}
+                                input={<OutlinedInput id="select-multiple-chip" color='primary' label="Select words" />}
+                                renderValue={(selected) => (
+                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                                        {selected.map((value) => (
+                                            <Chip key={value} label={value} />
+                                        ))}
+                                    </Box>
+                                )}
+                                sx={{
+                                    width: '100%'
+                                }}
+                            >
+                                {documentText.map((name, index) => (
+                                    <MenuItem
+                                        key={index}
+                                        value={name}
+                                        style={getStyles(name, selectedText, theme)}
+                                    >
+                                        {name}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Stack>
+
+                    <Button
+                        variant={'contained'}
+                        onClick={() => saveNewExpression()} >Save Expression</Button>
+
+                </Box>
+
+            </Modal>
             <Stack direction={'row'} gap={3} justifyContent={'space-around'} width={'80%'}>
                 <Button
                     variant={'contained'}
                     onClick={() => {
-                        updateToggle('GroupList')
-                    }} >View Expressions</Button>
-                <Button
-                    variant={'contained'}
-                    onClick={() => {
-                        updateToggle('AddGroup')
+                        setOpen1(true)
                     }} >Add Expression</Button>
             </Stack>
-        </Stack>
+        </Stack >
     )
 }

@@ -58,7 +58,7 @@ export default function WordGroup() {
 
     const updateToggle = (action: string) => {
         let arr: ToggleInterface[] = [...toggle];
-        arr.forEach((item: ToggleInterface, index: number) => {
+        arr.forEach((item: ToggleInterface) => {
             if (item?.action === action) {
                 item.active = true
                 if (action === 'GroupList') {
@@ -251,7 +251,6 @@ export default function WordGroup() {
 
                     <Button variant='contained' className="word-item" fullWidth
                         onClick={() => saveToDB('group')}
-                        color='secondary'
                     >Save Group</Button>
                 </Box>
 
@@ -283,7 +282,7 @@ export default function WordGroup() {
 
                     <Typography variant='h4'>Add Word</Typography>
                     <select onChange={(e) => {
-                        const obj = groupsList.find((item: any, index: number) => item?.name === e.target.value)
+                        const obj = groupsList.find((item: any) => item?.name === e.target.value)
                         setWordInput((prev: InputData) => {
                             return { ...prev, id: obj?.id }
                         })
@@ -311,7 +310,6 @@ export default function WordGroup() {
                         placeholder='Enter word ...' fullWidth />
                     <Button variant='contained'
                         onClick={() => saveToDB('word')}
-                        color='secondary'
                     >Save Word To Group</Button>
 
                 </Box>

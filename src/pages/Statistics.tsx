@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Statistics.css'
 import { useNavigate } from 'react-router-dom'
 import { BarChart } from '@mui/x-charts/BarChart';
-import { Box, Stack, Typography } from '@mui/material';
+import { LineChart } from '@mui/x-charts/LineChart';
+import { Box, Card, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Theme, Typography, styled, useMediaQuery, useTheme } from '@mui/material';
 import { Icon } from '@iconify/react/dist/iconify.js';
-import { ChartsColorPalette, LineChart } from '@mui/x-charts';
 
 export default function Statistics({ documents }: any) {
   const navigate = useNavigate();
@@ -13,6 +13,12 @@ export default function Statistics({ documents }: any) {
   const [selectedDoc, setSelectedDoc] = useState<any>(documents[0])
   const [chartKeys, setChartKeys] = useState<string[]>([''])
   const [chartVals, setChartVals] = useState<number[]>([0])
+
+  const [statsData, setStatsData] = useState<any>({})
+  const [activeCardData, setActiveCardData] = useState<any>({
+    paragraph: {},
+    sentence: {}
+  })
 
   //   function to get all text from document
   async function getDocumentData(filename: any) {
@@ -29,11 +35,15 @@ export default function Statistics({ documents }: any) {
     try {
       const res = await fetch(`http://localhost:5000/statistics?filename=${selectedDoc?.name}`)
       const data = await res.json()
-      const values: number[] = Object.values(data);
-      const keys: string[] = Object.keys(data)
+      const values: number[] = Object.values(data?.stats);
+      const keys: string[] = Object.keys(data?.stats)
+
+      console.log(keys)
 
       setChartVals([...values])
       setChartKeys([...keys])
+
+      setStatsData(data)
     } catch (e) {
       console.log("Error Occured Fetching groups: ", e);
     }
@@ -44,57 +54,175 @@ export default function Statistics({ documents }: any) {
     getFileStats();
   }, [selectedDoc])
 
+  const theme = useTheme();
 
-  const chartsParams = {
-    margin: { bottom: 20, left: 55, right: 25 },
-    height: 400
-  };
+  const StatisticCards = styled(Card)(({ theme, colors }: { colors: string, theme: Theme }) => ({
+    borderRadius: theme.shape.borderRadius,
+    padding: 16,
+    width: 200,
+    backgroundColor: colors
+  }))
+
+
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
 
 
   return (
-    <Stack direction={'column'} alignItems={'center'} justifyContent={'center'} gap={3}>
-      <Stack direction={'row'} justifyContent={'space-around'} width={'90%'}>
+    <Stack direction={'column'} alignItems={'center'} gap={4} width='100%'>
+      <Stack direction={'row'} justifyContent={'space-around'} width={'100%'}>
         <Icon width={24} icon="icon-park-solid:back" onClick={() => navigate("/")} style={{ flex: 1, cursor: 'pointer' }} />
         <Typography variant='h3' sx={{ flex: 5 }} fontWeight={'bold'} >Display Statistics</Typography>
       </Stack>
-      <Box width={'70%'} m={3} >
+      <Stack direction={'column'} gap={3} width={'90%'} >
 
-        <Stack direction={'column'} justifyContent={'center'} alignItems={'center'} width={'100%'} >
+        <Stack direction={isSmallScreen ? 'column' : 'row'} gap={2}>
+          <Box flex={1}>
+            <Typography variant='h6' textAlign={'left'}>Select Document:</Typography>
 
-          <LineChart
-            {...chartsParams}
-            series={[
-              {
-                data: [...chartVals],
-                label: 'Statistics',
-                color: "#2b3146",
-              },
-            ]}
-          />
-
-          <select
-            onChange={(e: any) => {
+            <select onChange={(e: any) => {
               const str = e.target.value.replace(".txt", "")
               const obj = documents.find((item: any, index: number) => item?.name === str);
               setSelectedDoc(obj)
             }}
-            style={{
-              width: '50%',
-              height: 55
-            }}
-          >
-            {
-              documents?.map((doc: any, index: number) => {
-                return (
-                  <option key={doc?.name}>{doc?.name + ".txt"}</option>
-                )
-              })
-            }
-          </select>
+              style={{
+                height: 55,
+                width: '100%'
+              }}
+            >
+              {
+                documents?.map((doc: any, index: number) => {
+                  return (
+                    <option key={doc?.name}>{doc?.name + ".txt"}</option>
+                  )
+                })
+              }
+            </select>
+          </Box>
+          <Box flex={1}>
+            <Typography variant='h6' textAlign={'left'}>Paragraph No:</Typography>
 
+            <select onChange={(e) => {
+              const obj = statsData?.paragraph?.find((item: any, i: number) => item?.paragraph === Number.parseInt(e.target.value));
+              console.log("Obj: ", e.target.value)
+              setActiveCardData((prev: any) => {
+                return { ...prev, paragraph: { ...obj } }
+              })
+            }}
+              style={{
+                height: 55,
+                width: '100%'
+              }}
+            >
+              {
+                statsData?.paragraph?.map((item: any, index: number) => {
+                  return (
+                    <option>{item?.paragraph}</option>
+                  )
+                })
+              }
+            </select>
+          </Box>
+          <Box flex={1}>
+
+            <Typography variant='h6' textAlign={'left'}>Sentence No:</Typography>
+
+            <select onChange={(e) => {
+              const obj = statsData?.sentence?.find((item: any, i: number) => item?.sentence === Number.parseInt(e.target.value));
+              console.log("Obj: ", e.target.value)
+              setActiveCardData((prev: any) => {
+                return { ...prev, sentence: { ...obj } }
+              })
+            }}
+              style={{
+                height: 55,
+                width: '100%'
+              }}
+            >
+              {
+                statsData?.sentence?.map((item: any, index: number) => {
+                  return (
+                    <option>{item?.sentence}</option>
+                  )
+                })
+              }
+            </select>
+          </Box>
         </Stack>
 
-      </Box>
+
+        <Stack direction={'row'} justifyContent={'space-around'}>
+          <StatisticCards colors='lightGreen' theme={theme}>
+            <Typography variant='h6'>Paragraph Num: {activeCardData?.paragraph?.paragraph}</Typography>
+            <Typography variant='h6'>No of Chars: {activeCardData?.paragraph?.num_characters}</Typography>
+            <Typography variant='h6'>No of Words: {activeCardData?.paragraph?.num_words}</Typography>
+          </StatisticCards>
+          <StatisticCards colors='lightblue' theme={theme}>
+            <Typography variant='h6'>Sentence Num: {activeCardData?.sentence?.sentence}</Typography>
+            <Typography variant='h6'>No of Chars: {activeCardData?.sentence?.num_characters}</Typography>
+            <Typography variant='h6'>No of Words: {activeCardData?.sentence?.num_words}</Typography>
+          </StatisticCards>
+        </Stack>
+
+
+        <Stack direction={isSmallScreen ? 'column' : 'row'} gap={2}>
+          <Stack flex={1} border={'1px solid lightgray'} borderRadius={2}>
+            <LineChart
+              xAxis={[{ scaleType: 'band', data: [...chartKeys] }]}
+              series={[{ data: [...chartVals], area: true }]}
+              width={isSmallScreen ? 650 : 700}
+              height={500}
+            />
+          </Stack>
+
+          <Stack flex={1} border={'1px solid lightgray'} borderRadius={2}>
+
+            <TableContainer component={Paper}>
+
+              <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center" >
+                      <Typography variant='h6' fontWeight={'bold'}>Total No Words: {statsData?.total_letters_counts?.total_num_words}</Typography>
+                    </TableCell>
+                    <TableCell align="center" >
+                      <Typography variant='h6' fontWeight={'bold'}>Total No Letter: {statsData?.total_letters_counts?.total_num_chars}</Typography>
+
+                    </TableCell>
+                  </TableRow>
+                  <TableRow >
+                    <TableCell
+                      align={'left'}
+                    >
+                      <Typography variant='body1' fontWeight={'bold'}>Word</Typography>
+                    </TableCell>
+                    <TableCell
+                      align={'left'}
+                    >
+                      <Typography variant='body1' fontWeight={'bold'}>Number</Typography>
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody sx={{ width: '100%' }}>
+                  {statsData?.frequency?.map((item: any, index: number) => (
+
+                    <TableRow key={item?.word}>
+                      <TableCell>
+                        {item?.word}
+                      </TableCell>
+                      <TableCell>
+                        {item?.count}
+                      </TableCell>
+                    </TableRow>
+
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Stack>
+        </Stack>
+      </Stack>
     </Stack>
   )
 }
+
+
