@@ -27,18 +27,18 @@ function HomePage() {
     <Stack direction={'column'} justifyContent={'center'} alignItems={'center'} gap={4}>
       <Typography variant='h3' fontWeight={'bold'} m={3}>Concordance Application</Typography>
 
-      <Stack direction={smallScreen ? 'column' : 'row'} gap={4} width={'55%'} justifyContent={smallScreen ? 'center' : 'space-between'}>
-        <LinkButton sx={{cursor:'pointer'}} onClick={handleOpen}>
+      <Stack direction={smallScreen ? 'column' : 'row'} gap={4} width={'55%'} justifyContent={smallScreen ? 'center' : 'space-between'} alignItems={'center'}>
+        <Link to="/words-display" style={{ textDecoration: 'none', color: 'black', fontSize: 20 }}><LinkButton sx={{ cursor: 'pointer' }} onClick={handleOpen}>
           <Icon width={24} icon="icon-park:inbox-upload-r" />
           <Typography variant='h6' ml={2} fontWeight={'bold'} >Upload Documents</Typography>
-        </LinkButton>
+        </LinkButton></Link>
         <Link to="/words-display" style={{ textDecoration: 'none', color: 'black', fontSize: 20 }}><LinkButton >
           <Icon width={24} icon="icon-park:display" />
           <Typography variant='h6' ml={2} fontWeight={'bold'} >Display Words</Typography>
         </LinkButton>
         </Link>
       </Stack>
-      <Stack direction={smallScreen ? 'column' : 'row'} gap={4} width={'55%'} justifyContent={smallScreen ? 'center' : 'space-between'}>
+      <Stack direction={smallScreen ? 'column' : 'row'} gap={4} width={'55%'} justifyContent={smallScreen ? 'center' : 'space-between'} alignItems={'center'}>
         <Link to="/words-group" style={{ textDecoration: 'none', color: 'black', fontSize: 20 }}><LinkButton >
           <Icon width={24} icon="noto-v1:input-latin-letters" />
           <Typography variant='h6' ml={2} fontWeight={'bold'} >Word Groups</Typography>
@@ -50,7 +50,7 @@ function HomePage() {
         </LinkButton>
         </Link>
       </Stack>
-      <Stack direction={smallScreen ? 'column' : 'row'} gap={4} width={'55%'} justifyContent={smallScreen ? 'center' : 'space-between'}>
+      <Stack direction={smallScreen ? 'column' : 'row'} gap={4} width={'55%'} justifyContent={smallScreen ? 'center' : 'space-between'} alignItems={'center'}>
         <Link to="/stats" style={{ textDecoration: 'none', color: 'black', fontSize: 20 }}><LinkButton >
           <Icon width={24} icon="flat-color-icons:statistics" />
           <Typography variant='h6' ml={2} fontWeight={'bold'} >Statistics</Typography>
