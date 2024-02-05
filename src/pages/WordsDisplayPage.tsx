@@ -85,7 +85,7 @@ const WordsDisplayPage = () => {
                 alignItems={'center'} gap={3}>
 
                 <input style={styles} name="doc_id" placeholder="Filter by Document ID" value={filters.doc_id} onChange={handleFilterChange} />
-                <input style={styles} name="startingLetter" placeholder="Starting Letter" value={filters.startingLetter} onChange={handleFilterChange} />
+                <input style={styles} name="startingLetter" placeholder="Word Search" value={filters.startingLetter} onChange={handleFilterChange} />
 
             </Stack>
 
@@ -107,7 +107,6 @@ const WordsDisplayPage = () => {
                 alignItems={'center'} gap={3}>
 
                 <input style={styles} name="lineNumber" placeholder="Line Number" value={filters.lineNumber} onChange={handleFilterChange} />
-                <input style={styles} name="lineRange" placeholder="Line Range" value={filters.lineRange} onChange={handleFilterChange} />
 
             </Stack>
 

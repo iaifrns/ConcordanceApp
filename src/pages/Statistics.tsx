@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import './Statistics.css'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { BarChart } from '@mui/x-charts/BarChart';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { Box, Card, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Theme, Typography, styled, useMediaQuery, useTheme } from '@mui/material';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 export default function Statistics({ documents }: any) {
   const navigate = useNavigate();
-  const [activeIndex, setActiveIndex] = useState<number>(0)
   const [documentText, setDocumentText] = useState<string[]>([])
   const [selectedDoc, setSelectedDoc] = useState<any>(documents[0])
   const [chartKeys, setChartKeys] = useState<string[]>([''])

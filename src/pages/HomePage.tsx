@@ -41,19 +41,19 @@ function HomePage() {
       <Stack direction={smallScreen ? 'column' : 'row'} gap={4} width={'55%'} justifyContent={smallScreen ? 'center' : 'space-between'}>
         <Link to="/words-group" style={{ textDecoration: 'none', color: 'black', fontSize: 20 }}><LinkButton >
           <Icon width={24} icon="noto-v1:input-latin-letters" />
-          <Typography variant='h6' ml={2} fontWeight={'bold'} >Manage Word Groups</Typography>
+          <Typography variant='h6' ml={2} fontWeight={'bold'} >Word Groups</Typography>
         </LinkButton>
         </Link>
         <Link to="/words-expressions" style={{ textDecoration: 'none', color: 'black', fontSize: 20 }}><LinkButton >
           <Icon width={24} icon="arcticons:irregularexpressions" />
-          <Typography variant='h6' ml={2} fontWeight={'bold'} >Manage Expressions</Typography>
+          <Typography variant='h6' ml={2} fontWeight={'bold'} >Expressions</Typography>
         </LinkButton>
         </Link>
       </Stack>
       <Stack direction={smallScreen ? 'column' : 'row'} gap={4} width={'55%'} justifyContent={smallScreen ? 'center' : 'space-between'}>
         <Link to="/stats" style={{ textDecoration: 'none', color: 'black', fontSize: 20 }}><LinkButton >
           <Icon width={24} icon="flat-color-icons:statistics" />
-          <Typography variant='h6' ml={2} fontWeight={'bold'} >Display Statistics</Typography>
+          <Typography variant='h6' ml={2} fontWeight={'bold'} >Statistics</Typography>
         </LinkButton>
         </Link>
         <Link to="/data-mining" style={{ textDecoration: 'none', color: 'black', fontSize: 20 }}><LinkButton >
